@@ -1,15 +1,9 @@
 const http = require('http');
 const path = require('path');
 const express = require('express');
-const socket_io = require('socket.io');
-const Coraline = require('coraline-core');
 const opn = require('opn');
 
-const PORT = 8081;
-
 let app = express();
-let server = http.Server(app);
-let io = socket_io(server);
 
 app.use(function (rq, rs, next) {
 	let { url } = rq;
@@ -29,11 +23,28 @@ app.use(function (rq, rs, next) {
 	} else next();
 });
 
-app.use(express.static('public'));
-
-server.listen(PORT, () => {
-	console.log("Server is listening at port :" + PORT);
-	opn('http://localhost:' + PORT + '/test.kmi');
+app.get('/@test.js', (rq, rs) => {
+	rs.sendFile(path.join(__dirname, 'test-entry.js'));
 });
 
-Coraline.createServer(io, { password: 'C0ral1n3' });
+app.get('/', (rq, rs) => {
+	rs.end(`
+			<!DOCTYPE html>
+			<html>
+			<head>
+			</head>
+			<body>
+				<script src="/kmi_modules/require.kmi.js"></script>
+
+				<meta kmi-init="@test">
+			</body>
+			</html>
+	`);
+});
+
+app.use(express.static('build'));
+
+app.listen(8080, () => {
+	console.log("Server is listening at port :8080");
+	opn('http://localhost:8080/');
+});
