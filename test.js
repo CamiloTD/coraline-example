@@ -1,9 +1,13 @@
 const http = require('http');
 const path = require('path');
 const express = require('express');
+const socket_io = require('socket.io');
+const Coraline = require('coraline-core');
 const opn = require('opn');
 
 let app = express();
+let server = http.Server(app);
+let io = socket_io(server);
 
 app.use(function (rq, rs, next) {
 	let { url } = rq;
@@ -44,7 +48,8 @@ app.get('/', (rq, rs) => {
 
 app.use(express.static('build'));
 
-app.listen(8080, () => {
+server.listen(8080, () => {
 	console.log("Server is listening at port :8080");
 	opn('http://localhost:8080/');
 });
+Coraline.createServer(io);

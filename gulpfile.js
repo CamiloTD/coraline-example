@@ -6,7 +6,7 @@ gulp.task('build-lib', () => gulp.src('./src/lib/**/*.*').pipe(gulp.dest('./buil
 gulp.task('build-lang', () => gulp.src('./src/lang/**/*.*').pipe(gulp.dest('./build/lang')));
 gulp.task('build-images', () => gulp.src('./src/images/**/*.*').pipe(gulp.dest('./build/images')));
 gulp.task('build-style', () => gulp.src('./src/style/**/*.styl').pipe(stylus({ include: 'src/style' })).pipe(gulp.dest('./build')));
-gulp.task('build-index', () => gulp.src('./src/**/*.js').pipe(gulp.dest('build')));
+gulp.task('build-index', () => gulp.src(['./src/**/*.js', '!./src/lib/**/*.*']).pipe(gulp.dest('build')));
 
 gulp.task('get-require.kmi', () => download('https://raw.githubusercontent.com/camilotd/require.kmi/master/src/require.kmi.js').pipe(gulp.dest('src/lib')));
 gulp.task('get-coraline-client', () => download('https://raw.githubusercontent.com/camilotd/coraline-client/master/src/coraline-client.js').pipe(gulp.dest('src/lib')));
