@@ -1,6 +1,7 @@
 let gulp = require('gulp');
 let download = require('gulp-download');
 let stylus = require('gulp-stylus');
+let watch  = require('gulp-watch');
 
 gulp.task('build-lib', () => gulp.src('./src/lib/**/*.*').pipe(gulp.dest('./build/kmi_modules')));
 gulp.task('build-lang', () => gulp.src('./src/lang/**/*.*').pipe(gulp.dest('./build/lang')));
@@ -15,3 +16,4 @@ gulp.task('get-eventemitter', () => download('https://cdnjs.cloudflare.com/ajax/
 
 gulp.task('init', ['get-require.kmi', 'get-coraline-client', 'get-jquery', 'get-eventemitter']);
 gulp.task('build', ['build-lib', 'build-style', 'build-lang', 'build-images', 'build-index']);
+gulp.task('watch', () => watch('./src/**/*.*', { ignoreInitial: false }, () => gulp.start('build')));
