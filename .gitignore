@@ -59,3 +59,10 @@ typings/
 
 # next.js build output
 .next
+
+# kmi_modules
+
+/public/kmi_modules/coraline-client.js
+/public/kmi_modules/EventEmitter.min.js
+/public/kmi_modules/jquery.min.js
+/public/kmi_modules/require.kmi.js

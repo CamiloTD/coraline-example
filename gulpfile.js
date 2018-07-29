@@ -1,43 +1,9 @@
-const gulp = require('gulp');
-const pug = require('gulp-pug-i18n');
-const watch = require('gulp-watch');
-const stylus = require('gulp-stylus');
+let gulp = require('gulp');
+let download = require('gulp-download');
 
-const DEBUG = true;
+gulp.task('get-require.kmi', () => download('https://raw.githubusercontent.com/camilotd/require.kmi/master/src/require.kmi.js').pipe(gulp.dest('public/kmi_modules')));
+gulp.task('get-coraline-client', () => download('https://raw.githubusercontent.com/camilotd/coraline-client/master/src/coraline-client.js').pipe(gulp.dest('public/kmi_modules')));
+gulp.task('get-jquery', () => download('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js').pipe(gulp.dest('public/kmi_modules')));
+gulp.task('get-eventemitter', () => download('https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.2.5/EventEmitter.min.js').pipe(gulp.dest('public/kmi_modules')));
 
-function watchPug(cb, ignoreInitial = false) {
-    let pug_obj = pug({
-        i18n: {
-            locales: 'lang/*.*',
-            dest: 'public',
-            namespace: 'Lang',
-            filename: '{{lang}}/{{basename}}.html'
-        },
-        basedir: 'src',
-        doctype: 'html',
-        pretty: DEBUG,
-        cache: false
-    }).on('error', function (error) {
-        console.log(error.message);
-        watchPug(cb, true);
-    });
-
-    return watch('src/**/*.pug', {ignoreInitial: ignoreInitial}).pipe(pug_obj).pipe(gulp.dest('public'));
-
-}
-
-function watchStylus(cb, ignoreInitial = false) {
-    let styl_obj = stylus({
-        include: 'src'
-    }).on('error', function (error) {
-        console.log(error);
-        watchStylus(cb, true);
-    });
-
-    return watch('src/**/*.styl', {ignoreInitial: ignoreInitial}).pipe(styl_obj).pipe(gulp.dest('public'));
-}
-
-gulp.task('watch-stylus', watchStylus);
-gulp.task('watch-pug', watchPug);
-
-gulp.task('default', ['watch-pug', 'watch-stylus']);
+gulp.task('init', ['get-require.kmi', 'get-coraline-client', 'get-jquery', 'get-eventemitter']);
