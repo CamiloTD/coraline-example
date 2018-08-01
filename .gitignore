@@ -66,3 +66,4 @@ typings/
 /public/kmi_modules/EventEmitter.min.js
 /public/kmi_modules/jquery.min.js
 /public/kmi_modules/require.kmi.js
+/build
