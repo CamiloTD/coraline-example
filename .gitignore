@@ -62,8 +62,8 @@ typings/
 
 # kmi_modules
 
-/public/kmi_modules/coraline-client.js
-/public/kmi_modules/EventEmitter.min.js
-/public/kmi_modules/jquery.min.js
-/public/kmi_modules/require.kmi.js
+/src/lib/coraline-client.js
+/src/lib/EventEmitter.min.js
+/src/lib/jquery.min.js
+/src/lib/require.kmi.js
 /build
